@@ -99,7 +99,7 @@
                 <span class="direction-icon lavender"><svg><use href="#icon-hand"></use></svg></span>
                 <span class="direction-content">
                   <span class="direction-title">Sign to text / speech</span>
-                  <span class="direction-description">Use your camera to capture a sign and see it as words.</span>
+                <span class="direction-description">Use your camera to match a sign from the included dataset.</span>
                   <span class="direction-tag"><span class="tag-dot"></span> CAMERA INPUT</span>
                 </span>
                 <span class="direction-arrow"><svg><use href="#icon-arrow"></use></svg></span>
@@ -109,7 +109,7 @@
                 <span class="direction-icon pale"><svg><use href="#icon-chat"></use></svg></span>
                 <span class="direction-content">
                   <span class="direction-title">Text to sign</span>
-                  <span class="direction-description">Type a message and prepare it for sign language.</span>
+                <span class="direction-description">Type a message and preview matching dataset image sequences.</span>
                   <span class="direction-tag"><span class="tag-dot tag-dot-purple"></span> TEXT INPUT</span>
                 </span>
                 <span class="direction-arrow"><svg><use href="#icon-arrow"></use></svg></span>
@@ -117,6 +117,7 @@
               <p class="privacy-note"><span aria-hidden="true">✳</span> Your camera only turns on when you choose to start it.</p>
             </div>
           </div>
+          
 
           <div class="how-strip" id="how-it-works">
             <div class="how-intro"><span class="how-kicker">SIMPLE BY DESIGN</span><span>Three small steps.<br />A more open conversation.</span></div>
@@ -197,7 +198,7 @@
             <aside class="checks-card text-tip-card">
               <span class="checks-icon"><svg><use href="#icon-chat"></use></svg></span>
               <h2>A message, made visual.</h2>
-              <p>Your text will be prepared as a sign sequence. Sign video playback can be connected when your sign library is ready.</p>
+              <p>Words found in the included sign dataset will play as short image sequences. Other words will be clearly marked.</p>
               <div class="text-tip-note"><svg><use href="#icon-spark"></use></svg><span>Use the words you’d naturally say.</span></div>
             </aside>
             <div class="text-continue-row">
@@ -230,8 +231,8 @@
               <span class="result-icon"><svg><use href="#icon-hand"></use></svg></span>
               <p class="result-overline">TRANSLATION</p>
               <h2 id="sign-result-title">Ready for the next step.</h2>
-              <p class="result-message" id="sign-result-message">Your sign input is captured. Connect the recognition service to turn it into text or speech.</p>
-              <span class="result-status" id="sign-result-status"><span></span><span id="sign-result-status-text">Input captured · Translation service not connected</span></span>
+              <p class="result-message" id="sign-result-message">Your sign input is captured. We’ll compare it with the available dataset signs.</p>
+              <span class="result-status" id="sign-result-status"><span></span><span id="sign-result-status-text">Input captured · Dataset match pending</span></span>
             </div>
             <div class="result-content text-result-content" id="text-result" hidden>
               <span class="result-icon"><svg><use href="#icon-chat"></use></svg></span>
@@ -241,7 +242,23 @@
                 <p class="result-overline">WORD SEQUENCE</p>
                 <div class="word-sequence" id="word-sequence"></div>
               </div>
-              <span class="result-status"><span></span> Text ready · Sign video library not connected</span>
+              <div class="dataset-player" id="dataset-player" hidden>
+                <p class="result-overline">DATASET SIGN PLAYBACK</p>
+                <div class="dataset-viewer">
+                  <button class="dataset-step-button" type="button" id="dataset-previous" aria-label="Previous dataset sign">‹</button>
+                  <div class="dataset-frame-wrap">
+                    <img id="dataset-frame" alt="" />
+                    <span class="dataset-frame-counter" id="dataset-frame-counter"></span>
+                  </div>
+                  <button class="dataset-step-button" type="button" id="dataset-next" aria-label="Next dataset sign">›</button>
+                </div>
+                <div class="dataset-controls">
+                  <button class="button button-outline" type="button" id="dataset-play">Pause sequence</button>
+                  <span id="dataset-active-word"></span>
+                </div>
+                <p class="dataset-hint" id="dataset-hint" role="status" aria-live="polite"></p>
+              </div>
+              <span class="result-status" id="text-result-status"><span></span><span id="text-result-status-text">Message ready</span></span>
             </div>
             <div class="result-card-footer">
               <span><svg><use href="#icon-spark"></use></svg> Made for connection, not perfection.</span>
@@ -251,7 +268,7 @@
 
           <div class="result-actions">
             <button class="button button-primary" type="button" id="start-again">Start a new conversation <svg><use href="#icon-arrow"></use></svg></button>
-            <p>To enable live translation, connect this interface to your SignBridge recognition and sign-video services.</p>
+            <p id="result-disclaimer">Dataset recognition is experimental and limited to the signs provided with this project.</p>
           </div>
         </section>
       </main>

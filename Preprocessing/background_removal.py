@@ -11,16 +11,29 @@ def remove_background(frame, hand_landmarks):
         raise ValueError("At least one hand landmark is required")
 
     height, width = frame.shape[:2]
-    points = np.array(
-        [
-            (
-                np.clip(int(landmark.x * width), 0, width - 1),
-                np.clip(int(landmark.y * height), 0, height - 1),
-            )
-            for landmark in hand_landmarks
-        ],
-        dtype=np.int32,
+    hands = (
+        [hand_landmarks]
+        if hasattr(hand_landmarks[0], "x")
+        else hand_landmarks
     )
+    hand_points = [
+        np.array(
+            [
+                (
+                    np.clip(int(landmark.x * width), 0, width - 1),
+                    np.clip(int(landmark.y * height), 0, height - 1),
+                )
+                for landmark in hand
+            ],
+            dtype=np.int32,
+        )
+        for hand in hands
+        if hand
+    ]
+    if not hand_points:
+        raise ValueError("At least one hand landmark is required")
+
+    points = np.concatenate(hand_points, axis=0)
     x_values = points[:, 0]
     y_values = points[:, 1]
     hand_width = int(x_values.max() - x_values.min())
@@ -38,19 +51,20 @@ def remove_background(frame, hand_landmarks):
     # Use landmark locations as definite foreground seeds and the hand hull
     # as probable foreground so GrabCut can keep the full hand silhouette.
     mask = np.full(roi.shape[:2], cv2.GC_PR_BGD, dtype=np.uint8)
-    roi_points = points - np.array([x_min, y_min], dtype=np.int32)
-    hull = cv2.convexHull(roi_points)
-    cv2.fillConvexPoly(mask, hull, cv2.GC_PR_FGD)
-
     seed_radius = max(2, int(min(hand_width, hand_height) * 0.025))
-    for point in roi_points:
-        cv2.circle(
-            mask,
-            tuple(point),
-            seed_radius,
-            cv2.GC_FGD,
-            thickness=-1,
-        )
+    roi_origin = np.array([x_min, y_min], dtype=np.int32)
+    for hand in hand_points:
+        roi_points = hand - roi_origin
+        hull = cv2.convexHull(roi_points)
+        cv2.fillConvexPoly(mask, hull, cv2.GC_PR_FGD)
+        for point in roi_points:
+            cv2.circle(
+                mask,
+                tuple(point),
+                seed_radius,
+                cv2.GC_FGD,
+                thickness=-1,
+            )
 
     bg_model = np.zeros((1, 65), np.float64)
     fg_model = np.zeros((1, 65), np.float64)

@@ -21,9 +21,16 @@ sys.path.insert(0, str(ROOT))
 
 from Preprocessing.background_removal import remove_background
 from Preprocessing.low_light_detection import prepare_frame
+from Preprocessing.sign_dataset import DatasetLandmarkRecognizer
 from Preprocessing.test_hand import MODEL_PATH, draw_hand_landmarks
 
 
+DATASET_ROOT = ROOT / "signer01_normal_plain" / "signer01_normal_plain"
+_sign_recognizer = DatasetLandmarkRecognizer(
+    DATASET_ROOT,
+    ROOT / ".signbridge_cache" / "sign-landmarks.npz",
+    MODEL_PATH,
+)
 MAX_REQUEST_BYTES = 8 * 1024 * 1024
 MAX_FRAME_WIDTH = 1280
 MAX_FRAME_HEIGHT = 720
@@ -81,7 +88,7 @@ def get_landmarker():
             options = vision.HandLandmarkerOptions(
                 base_options=python.BaseOptions(model_asset_path=str(MODEL_PATH)),
                 running_mode=vision.RunningMode.VIDEO,
-                num_hands=1,
+                num_hands=2,
                 min_hand_detection_confidence=0.5,
                 min_hand_presence_confidence=0.5,
                 min_tracking_confidence=0.5,
@@ -113,7 +120,8 @@ def process_frame(frame: np.ndarray, remove_hand_background: bool) -> dict:
         )
         detection = get_landmarker().detect_for_video(image, _last_timestamp_ms)
 
-    landmarks = detection.hand_landmarks[0] if detection.hand_landmarks else None
+    hands = detection.hand_landmarks or []
+    landmarks = hands[0] if hands else None
     result = {
         "hand_detected": landmarks is not None,
         "brightness": round(brightness, 1),
@@ -121,15 +129,17 @@ def process_frame(frame: np.ndarray, remove_hand_background: bool) -> dict:
         "lighting_status": lighting_status,
         "processed_image": None,
         "background_removed": False,
+        "recognition": _sign_recognizer.classify(hands),
     }
 
-    if remove_hand_background and landmarks:
-        rgba = remove_background(prepared, landmarks)
+    if remove_hand_background and hands:
+        rgba = remove_background(prepared, hands)
         result["processed_image"] = encode_image(rgba, ".png")
         result["background_removed"] = True
-    elif landmarks:
+    elif hands:
         preview = prepared.copy()
-        draw_hand_landmarks(preview, landmarks)
+        for hand in hands:
+            draw_hand_landmarks(preview, hand)
         result["processed_image"] = encode_image(preview, ".jpg")
 
     return result
@@ -145,9 +155,25 @@ class SignBridgeHandler(BaseHTTPRequestHandler):
                     "ok": True,
                     "hand_detection": "ready" if MODEL_PATH.is_file() else "model_missing",
                     "background_removal": "ready",
-                    "translation": "not_configured",
+                    "recognition": _sign_recognizer.status(),
                 },
             )
+            return
+        if path == "/api/signs":
+            self.send_json(200, {"signs": _sign_recognizer.catalog})
+            return
+        dataset_path = _sign_recognizer.frame_path(path)
+        if dataset_path is not None and dataset_path.is_file():
+            body = dataset_path.read_bytes()
+            self.send_response(200)
+            self.send_header(
+                "Content-Type",
+                mimetypes.guess_type(str(dataset_path))[0] or "application/octet-stream",
+            )
+            self.send_header("Content-Length", str(len(body)))
+            self.send_header("Cache-Control", "public, max-age=3600")
+            self.end_headers()
+            self.wfile.write(body)
             return
         static_path = STATIC_FILES.get(path)
         if static_path is None:
@@ -211,6 +237,7 @@ class SignBridgeHandler(BaseHTTPRequestHandler):
 
 def main() -> None:
     server = ThreadingHTTPServer(("127.0.0.1", 8000), SignBridgeHandler)
+    _sign_recognizer.start()
     print("SignBridge is running at http://localhost:8000")
     try:
         server.serve_forever()

@@ -75,6 +75,23 @@ class PreprocessingPipelineTests(unittest.TestCase):
         for x, y in pixel_points:
             self.assertGreater(result[y, x, 3], 0)
 
+    def test_background_removal_keeps_seeds_for_both_hands(self) -> None:
+        frame = np.full((100, 120, 3), (20, 40, 60), dtype=np.uint8)
+        cv2.rectangle(frame, (15, 30), (40, 80), (100, 170, 210), -1)
+        cv2.rectangle(frame, (75, 30), (100, 80), (100, 170, 210), -1)
+        left_points = [(25, 30), (18, 42), (35, 42), (25, 60), (25, 78)]
+        right_points = [(85, 30), (78, 42), (95, 42), (85, 60), (85, 78)]
+        hands = [
+            [SimpleNamespace(x=x / 120, y=y / 100) for x, y in points]
+            for points in (left_points, right_points)
+        ]
+
+        result = pipeline.remove_background(frame, hands)
+
+        self.assertEqual(result.shape, (100, 120, 4))
+        for x, y in left_points + right_points:
+            self.assertGreater(result[y, x, 3], 0)
+
 
 if __name__ == "__main__":
     unittest.main()

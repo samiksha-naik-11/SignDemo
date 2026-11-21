@@ -212,6 +212,23 @@ h1, h2 { font-family: "Manrope", "Segoe UI", sans-serif; }
 .word-sequence-wrap .result-overline { margin: 19px 0 11px; }
 .word-sequence { display: flex; flex-wrap: wrap; justify-content: center; gap: 7px; }
 .word-chip { padding: 8px 11px; border: 1px solid #ece6ef; border-radius: 7px; color: var(--navy); background: #faf7fb; font-size: 9px; }
+button.word-chip { cursor: pointer; }
+.word-chip.is-supported { border-color: #b7d3c7; background: #f0f7f2; }
+.word-chip.is-unsupported { color: #777b91; background: #f7f5f1; }
+.word-chip.is-active { outline: 2px solid var(--blue); outline-offset: 1px; }
+.dataset-player { width: 100%; margin-top: 22px; padding: 18px; border: 1px solid #ece6ef; border-radius: 11px; background: #fcfafc; }
+.dataset-player > .result-overline { margin: 0 0 13px; }
+.dataset-viewer { display: flex; align-items: center; justify-content: center; gap: 12px; }
+.dataset-step-button { display: grid; width: 34px; height: 34px; flex: 0 0 auto; place-items: center; border: 1px solid #e8e2eb; border-radius: 50%; color: var(--navy); background: var(--white); font-size: 22px; cursor: pointer; }
+.dataset-step-button:disabled { opacity: 0.4; cursor: default; }
+.dataset-frame-wrap { position: relative; display: grid; width: min(420px, 100%); height: 250px; place-items: center; overflow: hidden; border-radius: 8px; background: #f0edf3; }
+.dataset-frame-wrap img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.dataset-frame-counter { position: absolute; right: 8px; bottom: 8px; padding: 5px 8px; border-radius: 12px; color: white; background: rgba(0, 16, 91, 0.78); font-size: 8px; }
+.dataset-controls { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 12px; }
+.dataset-controls .button { min-height: 34px; }
+.dataset-controls > span { color: var(--navy); font-size: 10px; font-weight: 600; }
+.dataset-hint { min-height: 14px; margin: 10px 0 0; color: #777b91; font-size: 9px; line-height: 1.6; }
+.dataset-hint:empty { display: none; }
 .result-card-footer { border-top: 1px solid #eeebea; }
 .result-card-footer > span { display: inline-flex; align-items: center; gap: 7px; color: #898998; font-size: 8px; }
 .result-card-footer > span svg { width: 14px; height: 14px; color: var(--blue); }
@@ -284,6 +301,10 @@ h1, h2 { font-family: "Manrope", "Segoe UI", sans-serif; }
   .result-heading { padding-bottom: 23px; }
   .result-content { padding: 28px 20px; }
   .result-content h2 { font-size: 20px; }
+  .dataset-player { padding: 12px 8px; }
+  .dataset-viewer { gap: 6px; }
+  .dataset-step-button { width: 29px; height: 29px; }
+  .dataset-frame-wrap { height: 190px; }
   .result-card-top, .result-card-footer { padding: 12px 14px; }
   .result-card-footer > span { max-width: 175px; line-height: 1.5; }
   .site-footer { margin-top: 34px; font-size: 8px; }
