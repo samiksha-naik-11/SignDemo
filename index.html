@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#fcf9ec" />
+    <meta
+      name="description"
+      content="SignBridge makes everyday communication more accessible."
+    />
+    <title>SignBridge — Communication, made human</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <svg class="icon-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <symbol id="icon-mark" viewBox="0 0 40 40">
+        <path d="M20 3.5 35 12v16L20 36.5 5 28V12L20 3.5Z" fill="currentColor" />
+        <path d="M14 24.5V15m0 9.5h8.2a3.3 3.3 0 0 0 0-6.6H18m-4 3.3h9.5" fill="none" stroke="#FCF9EC" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4" />
+      </symbol>
+      <symbol id="icon-arrow" viewBox="0 0 24 24">
+        <path d="M4.5 12h15m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" />
+      </symbol>
+      <symbol id="icon-hand" viewBox="0 0 48 48">
+        <path d="M16 23V10a2.5 2.5 0 0 1 5 0v11-15a2.5 2.5 0 0 1 5 0v15-12a2.5 2.5 0 0 1 5 0v13-9a2.5 2.5 0 0 1 5 0v14c0 8-4.8 13-12.5 13h-2c-4.4 0-7.5-2.1-9.4-5.8l-5.3-9.4a2.9 2.9 0 0 1 4.7-3.3l4.5 4.5Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" />
+      </symbol>
+      <symbol id="icon-chat" viewBox="0 0 48 48">
+        <path d="M9 10.5h30v21H23l-9 7v-7H9v-21Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" />
+        <path d="M16 18h16m-16 7h11" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2.2" />
+      </symbol>
+      <symbol id="icon-camera" viewBox="0 0 24 24">
+        <path d="M4 7.5h3l1.5-2h7l1.5 2h3v11H4v-11Zm8 2.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" />
+      </symbol>
+      <symbol id="icon-upload" viewBox="0 0 24 24">
+        <path d="M12 15V4m-4 4 4-4 4 4M5 14v5h14v-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" />
+      </symbol>
+      <symbol id="icon-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.7" />
+        <path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.7" />
+      </symbol>
+      <symbol id="icon-spark" viewBox="0 0 24 24">
+        <path d="m12 2 1.8 7.2L21 12l-7.2 1.8L12 21l-1.8-7.2L3 12l7.2-2.8L12 2Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" />
+      </symbol>
+      <symbol id="icon-volume" viewBox="0 0 24 24">
+        <path d="M4 10v4h4l5 4V6l-5 4H4Zm12-2a6 6 0 0 1 0 8m2-11a10 10 0 0 1 0 14" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" />
+      </symbol>
+      <symbol id="icon-check" viewBox="0 0 24 24">
+        <path d="m5 12 4 4L19 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+      </symbol>
+    </svg>
+
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="SignBridge home" data-home>
+          <svg class="brand-mark"><use href="#icon-mark"></use></svg>
+          <span>sign<span class="brand-light">bridge</span></span>
+        </a>
+        <div class="topbar-note"><span class="topbar-dot"></span> A little more understood</div>
+        <a class="topbar-link" href="#how-it-works">How it works <span aria-hidden="true">↗</span></a>
+      </header>
+
+      <main>
+        <div class="progress-wrap" aria-label="Your progress">
+          <div class="progress-step is-active" data-step-indicator="1">
+            <span class="step-number">01</span><span class="step-name">Choose</span>
+          </div>
+          <span class="progress-line"></span>
+          <div class="progress-step" data-step-indicator="2">
+            <span class="step-number">02</span><span class="step-name">Set up</span>
+          </div>
+          <span class="progress-line"></span>
+          <div class="progress-step" data-step-indicator="3">
+            <span class="step-number">03</span><span class="step-name">Your result</span>
+          </div>
+        </div>
+
+        <section class="page is-visible" id="page-1" aria-labelledby="welcome-title">
+          <div class="welcome-layout">
+            <div class="welcome-copy">
+              <p class="eyebrow"><span class="eyebrow-line"></span> MEET IN THE MIDDLE</p>
+              <h1 id="welcome-title">Every conversation<br />has <span>another way.</span></h1>
+              <p class="intro">Choose how you’d like to communicate. We’ll take it from there, one step at a time.</p>
+              <div class="trust-note">
+                <span class="trust-icon"><svg><use href="#icon-spark"></use></svg></span>
+                <span>Designed to make connection feel effortless.</span>
+              </div>
+            </div>
+
+            <div class="direction-panel" aria-label="Choose a translation direction">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">LET’S GET STARTED</p>
+                  <h2>What would you like to do?</h2>
+                </div>
+                <span class="panel-count">01 <span>/ 03</span></span>
+              </div>
+
+              <button class="direction-card" type="button" data-direction="sign-to-text">
+                <span class="direction-icon lavender"><svg><use href="#icon-hand"></use></svg></span>
+                <span class="direction-content">
+                  <span class="direction-title">Sign to text / speech</span>
+                  <span class="direction-description">Use your camera to capture a sign and see it as words.</span>
+                  <span class="direction-tag"><span class="tag-dot"></span> CAMERA INPUT</span>
+                </span>
+                <span class="direction-arrow"><svg><use href="#icon-arrow"></use></svg></span>
+              </button>
+
+              <button class="direction-card" type="button" data-direction="text-to-sign">
+                <span class="direction-icon pale"><svg><use href="#icon-chat"></use></svg></span>
+                <span class="direction-content">
+                  <span class="direction-title">Text to sign</span>
+                  <span class="direction-description">Type a message and prepare it for sign language.</span>
+                  <span class="direction-tag"><span class="tag-dot tag-dot-purple"></span> TEXT INPUT</span>
+                </span>
+                <span class="direction-arrow"><svg><use href="#icon-arrow"></use></svg></span>
+              </button>
+              <p class="privacy-note"><span aria-hidden="true">✳</span> Your camera only turns on when you choose to start it.</p>
+            </div>
+          </div>
+
+          <div class="how-strip" id="how-it-works">
+            <div class="how-intro"><span class="how-kicker">SIMPLE BY DESIGN</span><span>Three small steps.<br />A more open conversation.</span></div>
+            <div class="how-item"><span class="how-index">1</span><span><b>Choose</b><small>Pick a direction</small></span></div>
+            <span class="how-divider"></span>
+            <div class="how-item"><span class="how-index">2</span><span><b>Prepare</b><small>Camera or message</small></span></div>
+            <span class="how-divider"></span>
+            <div class="how-item"><span class="how-index">3</span><span><b>Connect</b><small>See your result</small></span></div>
+          </div>
+        </section>
+
+        <section class="page" id="page-2" aria-labelledby="setup-title" hidden>
+          <div class="page-heading">
+            <button class="back-button" type="button" data-back="1"><span aria-hidden="true">←</span> Back</button>
+            <p class="eyebrow">STEP 02 <span class="eyebrow-separator">/</span> <span id="setup-mode-label">SIGN TO TEXT</span></p>
+            <h1 id="setup-title">Let’s get your <span id="setup-title-accent">camera</span><span class="heading-suffix"> ready.</span></h1>
+            <p class="intro" id="setup-intro">Find a comfortable spot in frame. We’ll help you check the lighting.</p>
+          </div>
+
+          <div class="setup-grid" id="camera-workspace">
+            <div class="camera-column">
+              <div class="camera-frame" id="camera-frame">
+                <video id="camera-video" autoplay playsinline muted aria-label="Live camera preview"></video>
+                <div class="camera-placeholder" id="camera-placeholder">
+                  <div class="camera-orbit orbit-one"></div>
+                  <div class="camera-orbit orbit-two"></div>
+                  <span class="placeholder-icon"><svg><use href="#icon-camera"></use></svg></span>
+                  <span class="placeholder-title">Your camera preview will appear here</span>
+                  <span class="placeholder-copy">Make sure your hands are visible and there’s a little space around you.</span>
+                  <button class="button button-light" type="button" id="start-camera"><svg><use href="#icon-camera"></use></svg> Start camera</button>
+                </div>
+                <div class="camera-live-badge" id="camera-live-badge" hidden><span></span> LIVE PREVIEW</div>
+                <div class="camera-bottom-label" id="camera-bottom-label" hidden>SignBridge camera preview</div>
+              </div>
+              <div class="camera-controls">
+                <div class="camera-actions">
+                  <button class="button button-primary" type="button" id="capture-button" disabled><span class="shutter-icon"></span> Capture sign</button>
+                  <button class="button button-outline" type="button" id="stop-camera" hidden>Stop camera</button>
+                  <label class="button button-outline upload-button" for="image-upload"><svg><use href="#icon-upload"></use></svg> Upload an image</label>
+                  <input id="image-upload" type="file" accept="image/*" hidden />
+                </div>
+                <p class="camera-error" id="camera-error" role="status" aria-live="polite"></p>
+              </div>
+            </div>
+
+            <aside class="checks-card" aria-label="Input preparation checks">
+              <div class="checks-heading">
+                <span class="checks-icon"><svg><use href="#icon-spark"></use></svg></span>
+                <span><b>Input checks</b><small>Small things that help</small></span>
+              </div>
+              <div class="check-row">
+                <span class="check-row-icon"><svg><use href="#icon-hand"></use></svg></span>
+                <span class="check-row-copy"><b>Hand detection</b><small>Keep your hands in frame</small></span>
+                <span class="check-state state-pending" id="hand-state"><span></span> Not connected</span>
+              </div>
+              <div class="check-row">
+                <span class="check-row-icon"><svg><use href="#icon-sun"></use></svg></span>
+                <span class="check-row-copy"><b>Lighting</b><small id="lighting-description">We’ll check as you go</small></span>
+                <span class="check-state state-pending" id="lighting-state"><span></span> Waiting</span>
+              </div>
+              <div class="check-row">
+                <span class="check-row-icon"><svg><use href="#icon-spark"></use></svg></span>
+                <span class="check-row-copy"><b>Background</b><small id="background-description">Needs preprocessing service</small></span>
+                <span class="check-state state-pending" id="background-state"><span></span> Not connected</span>
+              </div>
+              <div class="lighting-meter" aria-hidden="true"><span id="lighting-meter-fill"></span></div>
+              <p class="checks-footnote">Camera preview stays on this device.</p>
+            </aside>
+          </div>
+
+          <div class="text-workspace" id="text-workspace" hidden>
+            <div class="text-composer">
+              <label for="message-input">Your message</label>
+              <p>Write what you’d like to say. You can make changes before you continue.</p>
+              <textarea id="message-input" maxlength="500" placeholder="Type a message, like “Hello, how are you?”" rows="5"></textarea>
+              <div class="composer-footer"><span>Keep it short and clear</span><span><span id="character-count">0</span> / 500</span></div>
+            </div>
+            <aside class="checks-card text-tip-card">
+              <span class="checks-icon"><svg><use href="#icon-chat"></use></svg></span>
+              <h2>A message, made visual.</h2>
+              <p>Your text will be prepared as a sign sequence. Sign video playback can be connected when your sign library is ready.</p>
+              <div class="text-tip-note"><svg><use href="#icon-spark"></use></svg><span>Use the words you’d naturally say.</span></div>
+            </aside>
+            <div class="text-continue-row">
+              <p class="camera-error" id="text-error" role="status" aria-live="polite"></p>
+              <button class="button button-primary" type="button" id="continue-text">See your result <svg><use href="#icon-arrow"></use></svg></button>
+            </div>
+          </div>
+
+          <div class="setup-footer" id="camera-footer">
+            <span><span class="footer-lock">✳</span> No recording is saved without your say-so.</span>
+            <button class="text-link" type="button" data-back="1">Choose a different direction <span aria-hidden="true">↗</span></button>
+          </div>
+        </section>
+
+        <section class="page" id="page-3" aria-labelledby="result-title" hidden>
+          <div class="result-heading">
+            <button class="back-button" type="button" data-back="2"><span aria-hidden="true">←</span> Back</button>
+            <p class="eyebrow">STEP 03 <span class="eyebrow-separator">/</span> YOUR RESULT</p>
+            <h1 id="result-title">A moment of <span>understanding.</span></h1>
+            <p class="intro" id="result-intro">Here’s what we have ready for you.</p>
+          </div>
+
+          <div class="result-card">
+            <div class="result-card-top">
+              <span class="result-type"><span class="result-type-dot"></span><span id="result-type-label">SIGN TO TEXT</span></span>
+              <span class="result-time" id="result-time">JUST NOW</span>
+            </div>
+            <div class="result-content" id="sign-result">
+              <div class="result-visual" id="result-image-wrap" hidden><img id="result-image" alt="Captured sign input" /></div>
+              <span class="result-icon"><svg><use href="#icon-hand"></use></svg></span>
+              <p class="result-overline">TRANSLATION</p>
+              <h2 id="sign-result-title">Ready for the next step.</h2>
+              <p class="result-message" id="sign-result-message">Your sign input is captured. Connect the recognition service to turn it into text or speech.</p>
+              <span class="result-status" id="sign-result-status"><span></span><span id="sign-result-status-text">Input captured · Translation service not connected</span></span>
+            </div>
+            <div class="result-content text-result-content" id="text-result" hidden>
+              <span class="result-icon"><svg><use href="#icon-chat"></use></svg></span>
+              <p class="result-overline">YOUR MESSAGE</p>
+              <h2 id="result-message-text"></h2>
+              <div class="word-sequence-wrap">
+                <p class="result-overline">WORD SEQUENCE</p>
+                <div class="word-sequence" id="word-sequence"></div>
+              </div>
+              <span class="result-status"><span></span> Text ready · Sign video library not connected</span>
+            </div>
+            <div class="result-card-footer">
+              <span><svg><use href="#icon-spark"></use></svg> Made for connection, not perfection.</span>
+              <button class="text-link" type="button" id="speak-result" hidden><svg><use href="#icon-volume"></use></svg> Read aloud</button>
+            </div>
+          </div>
+
+          <div class="result-actions">
+            <button class="button button-primary" type="button" id="start-again">Start a new conversation <svg><use href="#icon-arrow"></use></svg></button>
+            <p>To enable live translation, connect this interface to your SignBridge recognition and sign-video services.</p>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <span>© SignBridge</span>
+        <span class="footer-center">Every voice deserves to be understood.</span>
+        <span class="footer-colors"><i></i><i></i><i></i><i></i></span>
+      </footer>
+    </div>
+  </body>
+</html>
